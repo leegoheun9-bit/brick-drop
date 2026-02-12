@@ -25,9 +25,9 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    /* Center vertically on desktop */
     min-height: 100vh;
     overflow-x: hidden;
-    /* Prevent horizontal scroll */
 }
 
 .background-animation {
@@ -53,8 +53,8 @@ body {
     max-width: 800px;
     width: 95%;
 
-    /* Ensure space for controls on mobile */
-    margin-bottom: 250px;
+    /* Ensure space for controls on mobile default */
+    margin-bottom: 200px;
 }
 
 header {
@@ -302,26 +302,27 @@ canvas#tetris {
 }
 
 /* ==========================================================================
-   MOBILE CONTROLS (ALWAYS VISIBLE - NO MEDIA QUERY)
+   MOBILE CONTROLS (ALWAYS VISIBLE)
    ========================================================================== */
 .mobile-controls {
     display: grid !important;
     grid-template-columns: repeat(3, 1fr);
     gap: 10px;
-    width: 90%;
+    width: 95%;
+    /* Use full width */
     max-width: 500px;
     position: fixed;
-    bottom: 20px;
+    bottom: 10px;
+    /* Stick near bottom */
     left: 50%;
     transform: translateX(-50%);
     z-index: 999999;
-    /* Super high z-index */
 
-    background: rgba(0, 0, 0, 0.8);
+    background: rgba(0, 0, 0, 0.85);
     backdrop-filter: blur(5px);
-    padding: 15px;
-    border-radius: 20px;
-    border: 2px solid rgba(255, 255, 255, 0.2);
+    padding: 10px;
+    border-radius: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
 .mobile-controls button {
@@ -329,9 +330,10 @@ canvas#tetris {
     background: #333;
     border: 1px solid rgba(255, 255, 255, 0.3);
     color: white;
-    padding: 20px 0;
-    border-radius: 12px;
-    font-size: 1.5rem;
+    padding: 15px 0;
+    /* Optimized padding */
+    border-radius: 10px;
+    font-size: 1.4rem;
     font-weight: bold;
     cursor: pointer;
 
@@ -345,7 +347,7 @@ canvas#tetris {
     transform: scale(0.95);
 }
 
-/* Specific Colors */
+/* Vivid Colors */
 #btn-hold {
     grid-column: 1;
     background: #FFD700;
@@ -353,7 +355,6 @@ canvas#tetris {
     box-shadow: 0 4px 0 #B8860B;
 }
 
-/* Gold */
 #btn-rotate {
     grid-column: 2;
     background: #00FF00;
@@ -361,7 +362,6 @@ canvas#tetris {
     box-shadow: 0 4px 0 #006400;
 }
 
-/* Green */
 #btn-drop {
     grid-column: 3;
     background: #FF4500;
@@ -369,44 +369,91 @@ canvas#tetris {
     box-shadow: 0 4px 0 #8B0000;
 }
 
-/* Red */
-
 #btn-left {
     grid-column: 1;
     grid-row: 2;
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.15);
 }
 
 #btn-down {
     grid-column: 2;
     grid-row: 2;
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.15);
 }
 
 #btn-right {
     grid-column: 3;
     grid-row: 2;
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.15);
 }
 
 
-/* Responsive Adjustments for Layout Only */
+/* ==========================================================================
+   MOBILE OPTIMIZATION (Fit everything on one screen)
+   ========================================================================== */
 @media (max-width: 768px) {
+    body {
+        align-items: flex-start;
+        /* Start from top, not center */
+        padding-top: 10px;
+        overflow: hidden;
+        /* Try to prevent scrolling */
+    }
+
+    h1 {
+        font-size: 1.8rem;
+        /* Smaller title */
+        margin-bottom: 0.5rem;
+    }
+
+    header {
+        margin-bottom: 0px;
+    }
+
+    .game-container {
+        padding: 0.5rem;
+        width: 100%;
+        max-width: 100%;
+        margin-bottom: 180px;
+        /* Space for controls */
+
+        /* MAGIC: Scale down everything to fit! */
+        transform: scale(0.85);
+        transform-origin: top center;
+        border: none;
+        background: transparent;
+        box-shadow: none;
+    }
+
     .main-content {
         flex-direction: column;
         align-items: center;
+        gap: 0.5rem;
     }
 
+    /* Side panel (Score, Next, Hold) laid out horizontally */
     .side-panel {
         width: 100%;
         flex-direction: row;
         justify-content: center;
-        flex-wrap: wrap;
+        gap: 10px;
+        min-width: auto;
     }
 
     .panel-item {
-        margin: 5px;
-        min-width: 70px;
+        margin: 0;
+        min-width: 60px;
+        padding: 5px;
+    }
+
+    .panel-item h3 {
+        font-size: 0.7rem;
+        margin-bottom: 0;
+    }
+
+    .panel-item p {
+        font-size: 1.2rem;
+        margin: 0;
     }
 
     .controls-info {
