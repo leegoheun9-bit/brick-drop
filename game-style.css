@@ -408,7 +408,8 @@ canvas#tetris {
         padding: 0.5rem;
         width: 100%;
         max-width: 100%;
-        margin-bottom: 200px;
+        /* Reduce bottom margin so controls don't overlap text */
+        margin-bottom: 220px;
 
         transform: scale(0.85);
         transform-origin: top center;
