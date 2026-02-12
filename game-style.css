@@ -54,7 +54,6 @@ body {
     position: relative;
     z-index: 1;
     margin-bottom: 0;
-    /* Default */
 }
 
 header {
@@ -147,7 +146,6 @@ canvas#tetris {
     color: #fff;
 }
 
-/* Overlays */
 .overlay {
     position: absolute;
     top: 0;
@@ -312,7 +310,6 @@ canvas#tetris {
     max-width: 500px;
     position: fixed;
     bottom: 15px;
-    /* Stay at bottom */
     left: 50%;
     transform: translateX(-50%);
     z-index: 999999;
@@ -388,20 +385,17 @@ canvas#tetris {
         align-items: flex-start;
         padding-top: 5px;
         overflow: hidden;
-        /* Prevent body scroll */
     }
 
     h1 {
         font-size: 1.5rem;
         margin: 5px 0;
         display: none;
-        /* Hide Title on mobile to save space if needed, or keep small */
     }
 
     header {
         margin-bottom: 0;
         display: none;
-        /* Hide header completely to save vertical space */
     }
 
     .game-container {
@@ -410,12 +404,10 @@ canvas#tetris {
         max-width: 100%;
         margin-bottom: 230px;
         /* Space for controls */
-
         background: transparent;
         border: none;
         box-shadow: none;
         transform: none;
-        /* Remove previous scaling */
         overflow: visible;
     }
 
@@ -437,9 +429,7 @@ canvas#tetris {
         grid-area: board;
         justify-self: center;
         width: 240px;
-        /* Mobile optimal width */
         height: 400px;
-        /* Fixed height for consistency */
         margin-top: 5px;
     }
 
@@ -454,23 +444,21 @@ canvas#tetris {
         /* Children become direct grid items */
     }
 
-    /* Selecting children by order: Level, Score, Next, Hold */
-    /* Check index.html order: Level (1), Score (2), Next (3), Hold (4) */
-
-    .panel-item:nth-child(1) {
+    /* Use specific classes for mapping instead of nth-child for safety */
+    .level-box {
         grid-area: level;
     }
 
-    .panel-item:nth-child(2) {
+    .score-box {
         grid-area: score;
     }
 
-    .panel-item:nth-child(3) {
-        grid-area: next;
+    .hold-box {
+        grid-area: hold;
     }
 
-    .panel-item:nth-child(4) {
-        grid-area: hold;
+    .next-piece-box {
+        grid-area: next;
     }
 
     .panel-item {
@@ -482,6 +470,7 @@ canvas#tetris {
         flex-direction: column;
         justify-content: center;
         align-items: center;
+        border-radius: 8px;
     }
 
     .panel-item h3 {
