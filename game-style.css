@@ -436,19 +436,37 @@ canvas#tetris {
         width: 100%;
         flex-direction: row;
         justify-content: center;
+        flex-wrap: wrap;
+        /* allow wrap if needed */
         gap: 10px;
         min-width: auto;
     }
 
     .panel-item {
         margin: 0;
-        min-width: 60px;
+        min-width: 90px;
+        /* Increased from 60px to show full canvas */
         padding: 5px;
+        flex: 1;
+        /* Distribute space */
+        display: flex;
+        /* Center content */
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
     }
 
     .panel-item h3 {
-        font-size: 0.7rem;
-        margin-bottom: 0;
+        font-size: 0.8rem;
+        margin-bottom: 2px;
+    }
+
+    /* Ensure canvases fit but don't overflow */
+    #next-piece,
+    #hold-piece {
+        max-width: 100%;
+        height: auto;
+        display: block;
     }
 
     .panel-item p {
