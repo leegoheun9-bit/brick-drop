@@ -302,73 +302,92 @@ canvas#tetris {
 
 /* Mobile Controls */
 /* Mobile Controls */
+/* Mobile Controls - FORCED DISPLAY */
 .mobile-controls {
-    display: none;
+    display: grid !important;
+    /* Force display globally */
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    width: 90%;
+    max-width: 400px;
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 9999;
+    background: rgba(0, 0, 0, 0.85);
+    /* Dark background for visibility */
+    padding: 15px;
+    border-radius: 20px;
+    border: 2px solid white;
+    /* Strong border */
 }
 
-@media (max-width: 1024px) {
-    .mobile-controls {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 15px;
-        width: 90%;
-        max-width: 400px;
-        position: fixed;
-        bottom: 30px;
-        left: 50%;
-        transform: translateX(-50%);
-        z-index: 1000;
-        background: rgba(0, 0, 0, 0.5);
-        /* Semi-transparent background for visibility */
-        padding: 15px;
-        border-radius: 20px;
-        backdrop-filter: blur(5px);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-    }
-
-    .mobile-controls button {
-        background: rgba(255, 255, 255, 0.15);
-        border: 1px solid rgba(255, 255, 255, 0.3);
-        color: white;
-        padding: 20px 0;
-        /* Larger touch area */
-        border-radius: 15px;
-        font-size: 1.5rem;
-        cursor: pointer;
-        touch-action: manipulation;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-    }
-
-    .mobile-controls button:active {
-        background: rgba(255, 255, 255, 0.4);
-        transform: translateY(2px);
-    }
-
-    /* Hide the embedded mobile controls in side panel if we made a mess there */
-    .side-panel>.mobile-controls {
-        /* It is already this element, just ensuring layout doesn't break */
-    }
-
-    /* Adjust game container to leave space for controls */
-    .game-container {
-        padding-bottom: 200px;
-    }
+/* Force buttons to be visible */
+.mobile-controls button {
+    display: block !important;
+    background: #444;
+    border: 2px solid rgba(255, 255, 255, 0.8);
+    color: white;
+    padding: 20px 0;
+    border-radius: 12px;
+    font-size: 1.8rem;
+    font-weight: bold;
+    cursor: pointer;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+    box-shadow: 0 4px 0 #222;
+    /* 3D effect */
 }
 
-/* Specific button colors/positions */
+.mobile-controls button:active {
+    transform: translateY(4px);
+    box-shadow: none;
+    background: #666;
+}
+
+/* Specific button colors */
 #btn-hold {
     grid-column: 1;
-    background: rgba(255, 215, 0, 0.25);
+    background: #FFD700;
+    color: #000;
 }
 
+/* Yellow */
 #btn-rotate {
     grid-column: 2;
-    background: rgba(0, 242, 96, 0.25);
+    background: #00FF00;
+    color: #000;
 }
 
+/* Green */
 #btn-drop {
     grid-column: 3;
-    background: rgba(255, 75, 31, 0.25);
+    background: #FF0000;
+    color: #fff;
+}
+
+/* Red */
+
+#btn-left {
+    grid-column: 1;
+    grid-row: 2;
+}
+
+#btn-down {
+    grid-column: 2;
+    grid-row: 2;
+}
+
+#btn-right {
+    grid-column: 3;
+    grid-row: 2;
+}
+
+/* Adjust game container to leave space for controls */
+.game-container {
+    padding-bottom: 280px;
+    margin-bottom: 20px;
 }
 
 /* Moved drop to top row for better layout */
