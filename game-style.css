@@ -25,7 +25,6 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    /* Center vertically on desktop */
     min-height: 100vh;
     overflow-x: hidden;
 }
@@ -52,9 +51,11 @@ body {
     box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
     max-width: 800px;
     width: 95%;
-
-    /* Ensure space for controls on mobile default */
-    margin-bottom: 200px;
+    position: relative;
+    /* Ensure z-index context */
+    z-index: 1;
+    margin-bottom: 250px;
+    /* Space for controls */
 }
 
 header {
@@ -119,6 +120,8 @@ canvas#tetris {
     font-size: 1.5rem;
     font-weight: 700;
     text-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
+    color: white;
+    /* Ensure visible text */
 }
 
 #next-piece {
@@ -302,18 +305,16 @@ canvas#tetris {
 }
 
 /* ==========================================================================
-   MOBILE CONTROLS (ALWAYS VISIBLE)
+   MOBILE CONTROLS (Always Visible)
    ========================================================================== */
 .mobile-controls {
     display: grid !important;
     grid-template-columns: repeat(3, 1fr);
     gap: 10px;
     width: 95%;
-    /* Use full width */
     max-width: 500px;
     position: fixed;
-    bottom: 10px;
-    /* Stick near bottom */
+    bottom: 15px;
     left: 50%;
     transform: translateX(-50%);
     z-index: 999999;
@@ -331,15 +332,13 @@ canvas#tetris {
     border: 1px solid rgba(255, 255, 255, 0.3);
     color: white;
     padding: 15px 0;
-    /* Optimized padding */
     border-radius: 10px;
     font-size: 1.4rem;
     font-weight: bold;
     cursor: pointer;
-
-    -webkit-tap-highlight-color: transparent;
     touch-action: manipulation;
     user-select: none;
+    -webkit-tap-highlight-color: transparent;
 }
 
 .mobile-controls button:active {
@@ -347,7 +346,6 @@ canvas#tetris {
     transform: scale(0.95);
 }
 
-/* Vivid Colors */
 #btn-hold {
     grid-column: 1;
     background: #FFD700;
@@ -387,37 +385,31 @@ canvas#tetris {
     background: rgba(255, 255, 255, 0.15);
 }
 
-
 /* ==========================================================================
-   MOBILE OPTIMIZATION (Fit everything on one screen)
+   MOBILE OPTIMIZATION (Layout Adjustments)
    ========================================================================== */
 @media (max-width: 768px) {
     body {
         align-items: flex-start;
-        /* Start from top, not center */
-        padding-top: 10px;
+        padding-top: 5px;
         overflow: hidden;
-        /* Try to prevent scrolling */
     }
 
     h1 {
-        font-size: 1.8rem;
-        /* Smaller title */
-        margin-bottom: 0.5rem;
+        font-size: 1.5rem;
+        margin-bottom: 0.2rem;
     }
 
     header {
-        margin-bottom: 0px;
+        margin-bottom: 0;
     }
 
     .game-container {
         padding: 0.5rem;
         width: 100%;
         max-width: 100%;
-        margin-bottom: 180px;
-        /* Space for controls */
+        margin-bottom: 200px;
 
-        /* MAGIC: Scale down everything to fit! */
         transform: scale(0.85);
         transform-origin: top center;
         border: none;
@@ -431,51 +423,62 @@ canvas#tetris {
         gap: 0.5rem;
     }
 
-    /* Side panel (Score, Next, Hold) laid out horizontally */
+    /* Side panel: Use Full Width Grid */
     .side-panel {
         width: 100%;
-        flex-direction: row;
-        justify-content: center;
-        flex-wrap: wrap;
-        /* allow wrap if needed */
-        gap: 10px;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        /* 2 Columns */
+        gap: 8px;
         min-width: auto;
+        padding: 0 10px;
     }
 
+    /* Panel items forced to show properly */
     .panel-item {
         margin: 0;
-        min-width: 90px;
-        /* Increased from 60px to show full canvas */
         padding: 5px;
-        flex: 1;
-        /* Distribute space */
+        min-height: 60px;
+        /* Ensure height */
         display: flex;
-        /* Center content */
         flex-direction: column;
-        align-items: center;
         justify-content: center;
+        align-items: center;
+        background: rgba(255, 255, 255, 0.1);
+        /* Darker bg for visibility */
     }
 
     .panel-item h3 {
         font-size: 0.8rem;
         margin-bottom: 2px;
-    }
-
-    /* Ensure canvases fit but don't overflow */
-    #next-piece,
-    #hold-piece {
-        max-width: 100%;
-        height: auto;
-        display: block;
+        color: #fff;
+        /* White text */
+        text-shadow: 1px 1px 2px black;
     }
 
     .panel-item p {
         font-size: 1.2rem;
         margin: 0;
+        color: #fff;
+        /* White text */
+        text-shadow: 1px 1px 2px black;
+    }
+
+    /* Adjust order: Level, Score first row */
+    /* Next, Hold second row if needed, or re-ordered in HTML? */
+    /* Assuming HTML order is Level > Next > Score > Hold... */
+    /* Let's just make them fit nicely */
+
+    #next-piece,
+    #hold-piece {
+        max-width: 60px;
+        /* Limit canvas size */
+        height: auto;
+        display: block;
+        margin-top: 2px;
     }
 
     .controls-info {
         display: none;
-        /* Hide keyboard hints */
     }
 }
