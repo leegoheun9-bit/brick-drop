@@ -84,11 +84,15 @@ h1 {
     overflow: hidden;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
     background: rgba(0, 0, 0, 0.3);
+    width: 240px;
+    height: 400px;
 }
 
 canvas#tetris {
     display: block;
     background-color: transparent;
+    width: 100%;
+    height: 100%;
 }
 
 .side-panel {
@@ -307,12 +311,12 @@ canvas#tetris {
     grid-template-columns: repeat(3, 1fr);
     gap: 8px;
     width: 95%;
-    max-width: 500px;
+    max-width: 400px;
     position: fixed;
     bottom: 15px;
     left: 50%;
     transform: translateX(-50%);
-    z-index: 999999;
+    z-index: 9999999;
 
     background: rgba(0, 0, 0, 0.85);
     backdrop-filter: blur(5px);
@@ -378,23 +382,17 @@ canvas#tetris {
 }
 
 /* ==========================================================================
-   MOBILE OPTIMIZATION: RE-ORDER LAYOUT (Info ABOVE Board)
+   MOBILE OPTIMIZATION (Flexbox & Order)
    ========================================================================== */
 @media (max-width: 768px) {
     body {
         align-items: flex-start;
-        padding-top: 5px;
+        padding-top: 10px;
         overflow: hidden;
     }
 
-    h1 {
-        font-size: 1.5rem;
-        margin: 5px 0;
-        display: none;
-    }
-
+    h1,
     header {
-        margin-bottom: 0;
         display: none;
     }
 
@@ -402,8 +400,9 @@ canvas#tetris {
         padding: 5px;
         width: 100%;
         max-width: 100%;
-        margin-bottom: 230px;
+        margin-bottom: 240px;
         /* Space for controls */
+
         background: transparent;
         border: none;
         box-shadow: none;
@@ -411,57 +410,39 @@ canvas#tetris {
         overflow: visible;
     }
 
-    /* GRID LAYOUT for Mobile Content */
+    /* Main Layout: Vertical Stack */
     .main-content {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        /* 2 columns */
-        grid-template-areas:
-            "level score"
-            "hold next"
-            "board board";
+        display: flex;
+        flex-direction: column;
+        align-items: center;
         width: 100%;
         gap: 5px;
     }
 
-    /* 1. Game Board: Center, Bottom of grid */
+    /* 1. Side Panel (Stats): Moved to TOP using order */
+    .side-panel {
+        order: -1;
+        /* Move above game board */
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        /* Allow wrapping */
+        justify-content: center;
+        gap: 5px;
+        margin-bottom: 5px;
+    }
+
+    /* 2. Game Board: Below Stats */
     .game-board-container {
-        grid-area: board;
-        justify-self: center;
         width: 240px;
         height: 400px;
-        margin-top: 5px;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
     }
 
-    canvas#tetris {
-        width: 100%;
-        height: 100%;
-    }
-
-    /* 2. Side Panel items: Disassemble and place in grid */
-    .side-panel {
-        display: contents;
-        /* Children become direct grid items */
-    }
-
-    /* Use specific classes for mapping instead of nth-child for safety */
-    .level-box {
-        grid-area: level;
-    }
-
-    .score-box {
-        grid-area: score;
-    }
-
-    .hold-box {
-        grid-area: hold;
-    }
-
-    .next-piece-box {
-        grid-area: next;
-    }
-
+    /* Panel Items: 2 items per row */
     .panel-item {
+        width: 48%;
+        /* Almost half width */
         margin: 0;
         padding: 5px;
         min-height: 50px;
@@ -473,26 +454,58 @@ canvas#tetris {
         border-radius: 8px;
     }
 
+    /* Use order to arrange items */
+    /* Level & Score on top */
+    .level-box {
+        order: 1;
+        height: 60px;
+    }
+
+    .score-box {
+        order: 2;
+        height: 60px;
+    }
+
+    /* Hold & Next below */
+    .hold-box {
+        order: 3;
+        height: 80px;
+    }
+
+    .next-piece-box {
+        order: 4;
+        height: 80px;
+    }
+
     .panel-item h3 {
         font-size: 0.8rem;
-        margin: 0;
+        margin: 0 0 2px 0;
         color: #ddd;
     }
 
     .panel-item p {
-        font-size: 1.2rem;
+        font-size: 1.3rem;
         margin: 0;
         color: #fff;
+        font-weight: bold;
     }
 
     #next-piece,
     #hold-piece {
         max-width: 60px;
-        max-height: 40px;
+        max-height: 50px;
+        width: auto;
+        height: auto;
         display: block;
     }
 
     .controls-info {
         display: none;
+    }
+
+    /* High z-index for controls */
+    .mobile-controls {
+        z-index: 9999999;
+        bottom: 20px;
     }
 }
