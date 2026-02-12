@@ -301,40 +301,77 @@ canvas#tetris {
 }
 
 /* Mobile Controls */
+/* Mobile Controls */
 .mobile-controls {
     display: none;
-    /* Hidden on desktop */
-    margin-top: 1rem;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
-    width: 100%;
 }
 
-.mobile-controls button {
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    color: white;
-    padding: 15px 0;
-    border-radius: 10px;
-    font-size: 1.2rem;
-    cursor: pointer;
-    touch-action: manipulation;
+@media (max-width: 1024px) {
+    .mobile-controls {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 15px;
+        width: 90%;
+        max-width: 400px;
+        position: fixed;
+        bottom: 30px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 1000;
+        background: rgba(0, 0, 0, 0.5);
+        /* Semi-transparent background for visibility */
+        padding: 15px;
+        border-radius: 20px;
+        backdrop-filter: blur(5px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .mobile-controls button {
+        background: rgba(255, 255, 255, 0.15);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        color: white;
+        padding: 20px 0;
+        /* Larger touch area */
+        border-radius: 15px;
+        font-size: 1.5rem;
+        cursor: pointer;
+        touch-action: manipulation;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    }
+
+    .mobile-controls button:active {
+        background: rgba(255, 255, 255, 0.4);
+        transform: translateY(2px);
+    }
+
+    /* Hide the embedded mobile controls in side panel if we made a mess there */
+    .side-panel>.mobile-controls {
+        /* It is already this element, just ensuring layout doesn't break */
+    }
+
+    /* Adjust game container to leave space for controls */
+    .game-container {
+        padding-bottom: 200px;
+    }
 }
 
-.mobile-controls button:active {
-    background: rgba(255, 255, 255, 0.3);
-}
-
+/* Specific button colors/positions */
 #btn-hold {
     grid-column: 1;
-    background: rgba(255, 215, 0, 0.2);
+    background: rgba(255, 215, 0, 0.25);
 }
 
 #btn-rotate {
     grid-column: 2;
+    background: rgba(0, 242, 96, 0.25);
 }
 
-/* Empty space at col 3 row 1 if needed, or rearrange */
+#btn-drop {
+    grid-column: 3;
+    background: rgba(255, 75, 31, 0.25);
+}
+
+/* Moved drop to top row for better layout */
 
 #btn-left {
     grid-column: 1;
@@ -351,14 +388,7 @@ canvas#tetris {
     grid-row: 2;
 }
 
-#btn-drop {
-    grid-column: 1 / span 3;
-    grid-row: 3;
-    background: rgba(255, 75, 31, 0.2);
-}
-
-
-/* Responsive Design */
+/* Responsive Adjustments */
 @media (max-width: 768px) {
     .main-content {
         flex-direction: column;
@@ -368,26 +398,20 @@ canvas#tetris {
     .side-panel {
         width: 100%;
         flex-direction: row;
-        justify-content: space-between;
+        justify-content: center;
+        /* Center items */
         flex-wrap: wrap;
+        margin-bottom: 220px;
+        /* Space for fixed controls */
     }
 
     .panel-item {
-        flex: 1;
-        min-width: 80px;
+        margin: 5px;
+        min-width: 70px;
     }
 
-    /* Hide keyboard info on mobile if desired, or keep it */
     .controls-info {
         display: none;
-    }
-
-    .mobile-controls {
-        display: grid;
-    }
-
-    /* Layout adjustments for mobile controls */
-    .side-panel>.mobile-controls {
-        flex-basis: 100%;
+        /* Hide keyboard hints on mobile */
     }
 }
