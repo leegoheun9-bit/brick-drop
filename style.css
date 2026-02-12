@@ -1,0 +1,393 @@
+:root {
+    --bg-color: #0f0c29;
+    --bg-gradient: linear-gradient(315deg, #24243e 0%, #302b63 74%, #0f0c29 100%);
+    --glass-bg: rgba(255, 255, 255, 0.05);
+    --glass-border: rgba(255, 255, 255, 0.1);
+    --text-color: #ffffff;
+    --accent-color: #00f260;
+    --accent-glow: 0 0 10px #00f260, 0 0 20px #00f260;
+    --font-main: 'Noto Sans KR', 'Outfit', sans-serif;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    user-select: none;
+    /* Prevent selection on mobile taps */
+}
+
+body {
+    font-family: var(--font-main);
+    background: var(--bg-color);
+    background-image: var(--bg-gradient);
+    background-attachment: fixed;
+    color: var(--text-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    overflow: hidden;
+}
+
+.background-animation {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    overflow: hidden;
+    /* Add some subtle moving shapes if possible, simple css animation */
+}
+
+.game-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: var(--glass-bg);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    padding: 2rem;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+    max-width: 800px;
+    width: 95%;
+}
+
+header {
+    margin-bottom: 1.5rem;
+}
+
+h1 {
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+    font-size: 2.5rem;
+    background: linear-gradient(to right, #00f260, #0575e6);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.main-content {
+    display: flex;
+    gap: 2rem;
+    align-items: flex-start;
+}
+
+.game-board-container {
+    position: relative;
+    border: 2px solid var(--glass-border);
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, 0.3);
+}
+
+canvas#tetris {
+    display: block;
+    background-color: transparent;
+}
+
+.side-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    min-width: 150px;
+}
+
+.panel-item {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 10px;
+    padding: 1rem;
+    text-align: center;
+}
+
+.panel-item h3 {
+    font-size: 0.9rem;
+    color: #ccc;
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.panel-item p {
+    font-size: 1.5rem;
+    font-weight: 700;
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
+}
+
+#next-piece {
+    margin: 0 auto;
+    display: block;
+}
+
+.controls-info {
+    font-size: 0.8rem;
+    color: #aaa;
+    margin-top: 1rem;
+    line-height: 1.6;
+    background: rgba(0, 0, 0, 0.2);
+    padding: 1rem;
+    border-radius: 10px;
+}
+
+.controls-info span {
+    display: inline-block;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 2px 6px;
+    border-radius: 4px;
+    margin-right: 5px;
+    font-weight: bold;
+    color: #fff;
+}
+
+/* Overlays (Start, Pause, Game Over) */
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(15, 12, 41, 0.9);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+    transition: opacity 0.3s;
+    backdrop-filter: blur(5px);
+}
+
+.overlay.hidden {
+    opacity: 0;
+    pointer-events: none;
+    z-index: -1;
+}
+
+.overlay h2 {
+    font-size: 2.5rem;
+    color: #fff;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5), 0 0 20px var(--accent-color);
+    margin-bottom: 2rem;
+    text-align: center;
+    line-height: 1.2;
+}
+
+.overlay p {
+    font-size: 1.2rem;
+    color: #ccc;
+    margin-bottom: 2rem;
+}
+
+.press-start {
+    animation: blink 1.5s infinite;
+}
+
+@keyframes blink {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.5;
+    }
+}
+
+#start-btn,
+#restart-btn {
+    background: linear-gradient(to right, #00f260, #0575e6);
+    border: none;
+    padding: 1rem 2.5rem;
+    border-radius: 50px;
+    color: white;
+    font-weight: bold;
+    font-size: 1.2rem;
+    cursor: pointer;
+    box-shadow: 0 0 20px rgba(0, 242, 96, 0.3);
+    transition: transform 0.2s, box-shadow 0.2s;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+#start-btn:hover,
+#restart-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 30px rgba(0, 242, 96, 0.6);
+}
+
+/* Specific styling for game over to override generic overlay if needed */
+#game-over-modal h2 {
+    color: #ff4b1f;
+    text-shadow: 0 0 20px #ff4b1f;
+}
+
+#hold-piece {
+    margin: 0 auto;
+    display: block;
+}
+
+#high-score-form {
+    margin-bottom: 1.5rem;
+    display: flex;
+    gap: 10px;
+}
+
+#player-name {
+    padding: 0.8rem;
+    border-radius: 5px;
+    border: none;
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    font-family: var(--font-main);
+    font-size: 1rem;
+    outline: none;
+    border: 1px solid var(--glass-border);
+}
+
+#save-score-btn {
+    padding: 0.8rem 1.5rem;
+    background: var(--accent-color);
+    border: none;
+    border-radius: 5px;
+    color: #000;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+#leaderboard {
+    background: rgba(0, 0, 0, 0.5);
+    padding: 1.5rem;
+    border-radius: 10px;
+    width: 80%;
+    max-width: 300px;
+    margin-bottom: 1.5rem;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+#leaderboard h3 {
+    color: #ffd700;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+#high-scores-list {
+    list-style: none;
+    padding: 0;
+}
+
+#high-scores-list li {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    font-size: 0.9rem;
+}
+
+#high-scores-list li:last-child {
+    border-bottom: none;
+}
+
+.score-rank {
+    font-weight: bold;
+    color: var(--accent-color);
+    margin-right: 10px;
+}
+
+/* Mobile Controls */
+.mobile-controls {
+    display: none;
+    /* Hidden on desktop */
+    margin-top: 1rem;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    width: 100%;
+}
+
+.mobile-controls button {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: white;
+    padding: 15px 0;
+    border-radius: 10px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    touch-action: manipulation;
+}
+
+.mobile-controls button:active {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+#btn-hold {
+    grid-column: 1;
+    background: rgba(255, 215, 0, 0.2);
+}
+
+#btn-rotate {
+    grid-column: 2;
+}
+
+/* Empty space at col 3 row 1 if needed, or rearrange */
+
+#btn-left {
+    grid-column: 1;
+    grid-row: 2;
+}
+
+#btn-down {
+    grid-column: 2;
+    grid-row: 2;
+}
+
+#btn-right {
+    grid-column: 3;
+    grid-row: 2;
+}
+
+#btn-drop {
+    grid-column: 1 / span 3;
+    grid-row: 3;
+    background: rgba(255, 75, 31, 0.2);
+}
+
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .main-content {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .side-panel {
+        width: 100%;
+        flex-direction: row;
+        justify-content: space-between;
+        flex-wrap: wrap;
+    }
+
+    .panel-item {
+        flex: 1;
+        min-width: 80px;
+    }
+
+    /* Hide keyboard info on mobile if desired, or keep it */
+    .controls-info {
+        display: none;
+    }
+
+    .mobile-controls {
+        display: grid;
+    }
+
+    /* Layout adjustments for mobile controls */
+    .side-panel>.mobile-controls {
+        flex-basis: 100%;
+    }
+}

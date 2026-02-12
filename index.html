@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Brick Drop</title>
+    <meta name="description" content="A simple yet premium puzzle game for relaxation.">
+    <link rel="stylesheet" href="style.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;500;700&family=Outfit:wght@300;500;700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <div class="background-animation"></div>
+
+    <div class="game-container">
+        <header>
+            <h1>BRICK DROP</h1>
+        </header>
+
+        <div class="main-content">
+            <div class="game-board-container">
+                <canvas id="tetris" width="240" height="400"></canvas>
+
+                <!-- Start Screen -->
+                <div id="start-screen" class="overlay">
+                    <h2>BRICK DROP</h2>
+                    <p class="press-start">Press ENTER to Start</p>
+                    <button id="start-btn">GAME START</button>
+                    <!-- Small BGM toggle checkbox if needed -->
+                </div>
+
+                <!-- Pause Screen -->
+                <div id="pause-screen" class="overlay hidden">
+                    <h2>PAUSED</h2>
+                    <p>Press P to Resume</p>
+                </div>
+
+                <div id="game-over-modal" class="hidden overlay">
+                    <h2>GAME OVER</h2>
+                    <p class="final-score-display">SCORE: <span id="final-score">0</span></p>
+
+                    <div id="high-score-form">
+                        <input type="text" id="player-name" placeholder="Enter Name" maxlength="10">
+                        <button id="save-score-btn">SAVE</button>
+                    </div>
+
+                    <div id="leaderboard" class="hidden">
+                        <h3>🏆 HIGH SCORES 🏆</h3>
+                        <ul id="high-scores-list">
+                            <!-- List items will be injected -->
+                        </ul>
+                    </div>
+
+                    <button id="restart-btn">RETRY</button>
+                </div>
+                <div id="level-up-modal" class="hidden">
+                    <h2>LEVEL UP!</h2>
+                </div>
+            </div>
+
+            <div class="side-panel">
+                <div class="panel-item hold-box">
+                    <h3>HOLD</h3>
+                    <canvas id="hold-piece" width="80" height="80"></canvas>
+                </div>
+                <div class="panel-item score-box">
+                    <h3>SCORE</h3>
+                    <p id="score">0</p>
+                </div>
+                <div class="panel-item level-box">
+                    <h3>LEVEL</h3>
+                    <p id="level">1</p>
+                </div>
+                <div class="panel-item next-piece-box">
+                    <h3>NEXT</h3>
+                    <canvas id="next-piece" width="80" height="200"></canvas>
+                </div>
+
+                <div class="controls-info">
+                    <p><span>←</span> <span>→</span> Move</p>
+                    <p><span>↑</span> Rotate</p>
+                    <p><span>↓</span> Soft Drop</p>
+                    <p><span>Space</span> Hard Drop</p>
+                    <p><span>Shift</span> / <span>C</span> Hold</p>
+                </div>
+
+                <div class="mobile-controls">
+                    <button id="btn-hold">H</button>
+                    <button id="btn-rotate">↻</button>
+                    <!-- other buttons will be grid aligned in css -->
+                    <button id="btn-left">←</button>
+                    <button id="btn-down">↓</button>
+                    <button id="btn-right">→</button>
+                    <button id="btn-drop">⤓</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
