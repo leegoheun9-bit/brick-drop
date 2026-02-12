@@ -423,15 +423,15 @@ canvas#tetris {
         gap: 0.5rem;
     }
 
-    /* Side panel: Use Full Width Grid - 4 Columns in one row */
+    /* Side panel: 2 Columns for better text visibility */
     .side-panel {
         width: 100%;
         display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        /* 4 Columns */
-        gap: 5px;
+        grid-template-columns: 1fr 1fr;
+        /* 2 Columns */
+        gap: 10px;
         min-width: auto;
-        padding: 0 5px;
+        padding: 0 10px;
     }
 
     /* Panel items forced to show properly */
