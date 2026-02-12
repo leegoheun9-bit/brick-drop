@@ -53,7 +53,6 @@ body {
     width: 95%;
     position: relative;
     z-index: 1;
-    margin-bottom: 0;
 }
 
 header {
@@ -303,188 +302,127 @@ canvas#tetris {
     margin-right: 10px;
 }
 
-/* ==========================================================================
-   MOBILE CONTROLS (ALWAYS VISIBLE)
-   ========================================================================== */
+/* Control Visibility */
 .mobile-controls {
-    display: grid !important;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 8px;
-    width: 95%;
-    max-width: 400px;
-    position: fixed;
-    bottom: 15px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 9999999;
-
-    background: rgba(0, 0, 0, 0.85);
-    backdrop-filter: blur(5px);
-    padding: 10px;
-    border-radius: 15px;
-    border: 1px solid rgba(255, 255, 255, 0.3);
-}
-
-.mobile-controls button {
-    display: block !important;
-    background: #333;
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    color: white;
-    padding: 15px 0;
-    border-radius: 8px;
-    font-size: 1.4rem;
-    font-weight: bold;
-    cursor: pointer;
-    touch-action: manipulation;
-    user-select: none;
-    -webkit-tap-highlight-color: transparent;
-}
-
-.mobile-controls button:active {
-    background: #555;
-    transform: scale(0.95);
-}
-
-#btn-hold {
-    grid-column: 1;
-    background: #FFD700;
-    color: #000;
-}
-
-#btn-rotate {
-    grid-column: 2;
-    background: #00FF00;
-    color: #000;
-}
-
-#btn-drop {
-    grid-column: 3;
-    background: #FF4500;
-    color: #fff;
-}
-
-#btn-left {
-    grid-column: 1;
-    grid-row: 2;
-    background: rgba(255, 255, 255, 0.2);
-}
-
-#btn-down {
-    grid-column: 2;
-    grid-row: 2;
-    background: rgba(255, 255, 255, 0.2);
-}
-
-#btn-right {
-    grid-column: 3;
-    grid-row: 2;
-    background: rgba(255, 255, 255, 0.2);
+    display: none;
 }
 
 /* ==========================================================================
-   MOBILE OPTIMIZATION (Flexbox & Order)
+   MOBILE OPTIMIZATION (9:16 Ratio Focus)
    ========================================================================== */
 @media (max-width: 768px) {
     body {
+        /* Align content to the top */
         align-items: flex-start;
-        padding-top: 10px;
+        padding: 0;
+        margin: 0;
         overflow: hidden;
+        /* Prevent scrolling */
+        height: 100vh;
+        width: 100vw;
     }
 
+    /* Hide Desktop Elements */
     h1,
     header {
-        display: none;
+        display: none !important;
     }
 
+    /* Game Container: Fill Viewport */
     .game-container {
         padding: 5px;
+        margin: 0;
         width: 100%;
+        height: 100%;
         max-width: 100%;
-        margin-bottom: 240px;
-        /* Space for controls */
 
         background: transparent;
         border: none;
         box-shadow: none;
-        transform: none;
-        overflow: visible;
+
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        /* Vertical Center */
+        align-items: center;
     }
 
-    /* Main Layout: Vertical Stack */
+    /* Main Flex Layout */
     .main-content {
         display: flex;
         flex-direction: column;
         align-items: center;
         width: 100%;
-        gap: 5px;
+        height: 100%;
+        gap: 0;
+        position: relative;
     }
 
-    /* 1. Side Panel (Stats): Moved to TOP using order */
+    /* 1. TOP STATS PANEL */
     .side-panel {
         order: -1;
-        /* Move above game board */
+        /* Place Top */
         width: 100%;
         display: flex;
         flex-wrap: wrap;
-        /* Allow wrapping */
+        /* 2x2 Grid */
         justify-content: center;
         gap: 5px;
-        margin-bottom: 5px;
+        padding: 5px;
+
+        /* Limit height so board has space */
+        flex-grow: 0;
+        flex-shrink: 0;
+        z-index: 10;
     }
 
-    /* 2. Game Board: Below Stats */
-    .game-board-container {
-        width: 240px;
-        height: 400px;
-        box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
-    }
-
-    /* Panel Items: 2 items per row */
+    /* Panel Item */
     .panel-item {
         width: 48%;
-        /* Almost half width */
+        /* 2 items per row */
         margin: 0;
-        padding: 5px;
-        min-height: 50px;
+        padding: 2px;
+        height: 6vh;
+        /* Responsive Height */
+        min-height: 40px;
         background: rgba(255, 255, 255, 0.1);
+
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        border-radius: 8px;
+        border-radius: 5px;
     }
 
-    /* Use order to arrange items */
-    /* Level & Score on top */
+    /* Order Refinement: 
+       Row 1: Level(1), Score(2)
+       Row 2: Hold(3), Next(4)
+    */
     .level-box {
         order: 1;
-        height: 60px;
     }
 
     .score-box {
         order: 2;
-        height: 60px;
     }
 
-    /* Hold & Next below */
     .hold-box {
         order: 3;
-        height: 80px;
     }
 
     .next-piece-box {
         order: 4;
-        height: 80px;
     }
 
+    /* Text Adjustments */
     .panel-item h3 {
-        font-size: 0.8rem;
-        margin: 0 0 2px 0;
+        font-size: 0.7rem;
+        margin: 0;
         color: #ddd;
     }
 
     .panel-item p {
-        font-size: 1.3rem;
+        font-size: 1.1rem;
         margin: 0;
         color: #fff;
         font-weight: bold;
@@ -492,20 +430,106 @@ canvas#tetris {
 
     #next-piece,
     #hold-piece {
-        max-width: 60px;
-        max-height: 50px;
+        height: 80%;
         width: auto;
-        height: auto;
         display: block;
     }
 
+    /* 2. GAME BOARD (Middle) */
+    .game-board-container {
+        /* Use intelligent sizing */
+        flex-grow: 1;
+        /* Take available space */
+        flex-shrink: 1;
+        /* Shrink if needed */
+
+        width: auto;
+        /* Maintain aspect ratio 240/400 = 0.6 */
+        aspect-ratio: 0.6;
+
+        /* Limits: Don't get too tall to push controls off */
+        max-height: 55vh;
+
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        margin: 5px 0;
+    }
+
+    canvas#tetris {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+    }
+
+    /* Hide PC instructions */
     .controls-info {
         display: none;
     }
 
-    /* High z-index for controls */
+    /* 3. MOBILE CONTROLS (Bottom Fixed) */
     .mobile-controls {
-        z-index: 9999999;
-        bottom: 20px;
+        display: grid !important;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 5px;
+
+        /* Floating at Bottom */
+        position: fixed;
+        bottom: 10px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 95%;
+        max-width: 400px;
+        z-index: 9999;
+
+        padding: 5px;
+        background: rgba(0, 0, 0, 0.6);
+        /* Semi-transparent */
+        backdrop-filter: blur(5px);
+        border-radius: 15px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    /* Buttons */
+    .mobile-controls button {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        color: white;
+
+        /* Size Control */
+        padding: 0;
+        height: 7vh;
+        /* Responsive Height needed for interaction */
+        min-height: 50px;
+        max-height: 80px;
+
+        border-radius: 10px;
+        font-size: 1.5rem;
+        cursor: pointer;
+        touch-action: manipulation;
+        /* No delay */
+    }
+
+    .mobile-controls button:active {
+        background: rgba(255, 255, 255, 0.3);
+        transform: scale(0.95);
+    }
+
+    /* Button Colors */
+    #btn-hold {
+        border-color: #FFD700;
+        color: #FFD700;
+    }
+
+    #btn-rotate {
+        border-color: #00FF00;
+        color: #00FF00;
+    }
+
+    #btn-drop {
+        border-color: #FF4500;
+        color: #FF4500;
     }
 }
