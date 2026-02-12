@@ -308,7 +308,7 @@ canvas#tetris {
 }
 
 /* ==========================================================================
-   MOBILE OPTIMIZATION (9:16 Ratio Focus)
+   MOBILE OPTIMIZATION (9:16 Optimized 2x2 Grid)
    ========================================================================== */
 @media (max-width: 768px) {
     body {
@@ -342,9 +342,10 @@ canvas#tetris {
 
         display: flex;
         flex-direction: column;
-        justify-content: center;
-        /* Vertical Center */
+        justify-content: flex-start;
+        /* Start from top */
         align-items: center;
+        overflow: hidden;
     }
 
     /* Main Flex Layout */
@@ -358,33 +359,29 @@ canvas#tetris {
         position: relative;
     }
 
-    /* 1. TOP STATS PANEL */
+    /* 1. TOP STATS PANEL (Explicit Grid System) */
     .side-panel {
         order: -1;
-        /* Place Top */
         width: 100%;
-        display: flex;
-        flex-wrap: wrap;
-        /* 2x2 Grid */
-        justify-content: center;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        /* 2 Columns */
+        grid-template-areas:
+            "level score"
+            "hold next";
         gap: 5px;
         padding: 5px;
-
-        /* Limit height so board has space */
-        flex-grow: 0;
+        margin-top: 5px;
         flex-shrink: 0;
-        z-index: 10;
     }
 
     /* Panel Item */
     .panel-item {
-        width: 48%;
-        /* 2 items per row */
         margin: 0;
         padding: 2px;
         height: 6vh;
-        /* Responsive Height */
         min-height: 40px;
+        max-height: 60px;
         background: rgba(255, 255, 255, 0.1);
 
         display: flex;
@@ -394,31 +391,34 @@ canvas#tetris {
         border-radius: 5px;
     }
 
-    /* Order Refinement: 
-       Row 1: Level(1), Score(2)
-       Row 2: Hold(3), Next(4)
-    */
+    /* Explicit Area Assignment */
+    /* Row 1 */
     .level-box {
-        order: 1;
+        grid-area: level;
     }
 
     .score-box {
-        order: 2;
+        grid-area: score;
     }
 
+    /* Row 2 (Taller for pieces) */
     .hold-box {
-        order: 3;
+        grid-area: hold;
+        height: 8vh;
+        max-height: 80px;
     }
 
     .next-piece-box {
-        order: 4;
+        grid-area: next;
+        height: 8vh;
+        max-height: 80px;
     }
 
     /* Text Adjustments */
     .panel-item h3 {
         font-size: 0.7rem;
         margin: 0;
-        color: #ddd;
+        color: #ccc;
     }
 
     .panel-item p {
@@ -430,26 +430,21 @@ canvas#tetris {
 
     #next-piece,
     #hold-piece {
-        height: 80%;
+        height: 85%;
         width: auto;
         display: block;
     }
 
     /* 2. GAME BOARD (Middle) */
     .game-board-container {
-        /* Use intelligent sizing */
         flex-grow: 1;
         /* Take available space */
-        flex-shrink: 1;
-        /* Shrink if needed */
-
         width: auto;
         /* Maintain aspect ratio 240/400 = 0.6 */
         aspect-ratio: 0.6;
 
-        /* Limits: Don't get too tall to push controls off */
+        /* Maximize usage but stop before hitting buttons */
         max-height: 55vh;
-
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
         margin: 5px 0;
     }
@@ -471,7 +466,7 @@ canvas#tetris {
         grid-template-columns: repeat(3, 1fr);
         gap: 5px;
 
-        /* Floating at Bottom */
+        /* Fixed Bottom */
         position: fixed;
         bottom: 10px;
         left: 50%;
@@ -481,11 +476,10 @@ canvas#tetris {
         z-index: 9999;
 
         padding: 5px;
-        background: rgba(0, 0, 0, 0.6);
-        /* Semi-transparent */
+        background: rgba(0, 0, 0, 0.7);
         backdrop-filter: blur(5px);
         border-radius: 15px;
-        border: 1px solid rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.15);
     }
 
     /* Buttons */
@@ -498,10 +492,8 @@ canvas#tetris {
         border: 1px solid rgba(255, 255, 255, 0.2);
         color: white;
 
-        /* Size Control */
         padding: 0;
         height: 7vh;
-        /* Responsive Height needed for interaction */
         min-height: 50px;
         max-height: 80px;
 
@@ -509,7 +501,6 @@ canvas#tetris {
         font-size: 1.5rem;
         cursor: pointer;
         touch-action: manipulation;
-        /* No delay */
     }
 
     .mobile-controls button:active {
