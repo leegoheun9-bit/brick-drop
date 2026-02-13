@@ -308,11 +308,10 @@ canvas#tetris {
 }
 
 /* ==========================================================================
-   MOBILE OPTIMIZATION (9:16 Optimized 2x2 Grid)
+   MOBILE OPTIMIZATION (Split Controls for Thumbs)
    ========================================================================== */
 @media (max-width: 768px) {
     body {
-        /* Align content to the top */
         align-items: flex-start;
         padding: 0;
         margin: 0;
@@ -322,33 +321,27 @@ canvas#tetris {
         width: 100vw;
     }
 
-    /* Hide Desktop Elements */
     h1,
     header {
         display: none !important;
     }
 
-    /* Game Container: Fill Viewport */
     .game-container {
         padding: 5px;
         margin: 0;
         width: 100%;
         height: 100%;
         max-width: 100%;
-
         background: transparent;
         border: none;
         box-shadow: none;
-
         display: flex;
         flex-direction: column;
         justify-content: flex-start;
-        /* Start from top */
         align-items: center;
         overflow: hidden;
     }
 
-    /* Main Flex Layout */
     .main-content {
         display: flex;
         flex-direction: column;
@@ -359,23 +352,21 @@ canvas#tetris {
         position: relative;
     }
 
-    /* 1. TOP STATS PANEL (Explicit Grid System) */
+    /* 1. TOP STATS PANEL (2x2 Grid) */
     .side-panel {
         order: -1;
         width: 100%;
         display: grid;
         grid-template-columns: 1fr 1fr;
-        /* 2 Columns */
         grid-template-areas:
             "level score"
             "hold next";
         gap: 5px;
-        padding: 5px;
+        padding: 5px 10px;
         margin-top: 5px;
         flex-shrink: 0;
     }
 
-    /* Panel Item */
     .panel-item {
         margin: 0;
         padding: 2px;
@@ -383,16 +374,13 @@ canvas#tetris {
         min-height: 40px;
         max-height: 60px;
         background: rgba(255, 255, 255, 0.1);
-
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        border-radius: 5px;
+        border-radius: 8px;
     }
 
-    /* Explicit Area Assignment */
-    /* Row 1 */
     .level-box {
         grid-area: level;
     }
@@ -401,7 +389,6 @@ canvas#tetris {
         grid-area: score;
     }
 
-    /* Row 2 (Taller for pieces) */
     .hold-box {
         grid-area: hold;
         height: 8vh;
@@ -414,7 +401,6 @@ canvas#tetris {
         max-height: 80px;
     }
 
-    /* Text Adjustments */
     .panel-item h3 {
         font-size: 0.7rem;
         margin: 0;
@@ -438,13 +424,9 @@ canvas#tetris {
     /* 2. GAME BOARD (Middle) */
     .game-board-container {
         flex-grow: 1;
-        /* Take available space */
         width: auto;
-        /* Maintain aspect ratio 240/400 = 0.6 */
         aspect-ratio: 0.6;
-
-        /* Maximize usage but stop before hitting buttons */
-        max-height: 55vh;
+        max-height: 50vh;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
         margin: 5px 0;
     }
@@ -455,52 +437,59 @@ canvas#tetris {
         object-fit: contain;
     }
 
-    /* Hide PC instructions */
     .controls-info {
         display: none;
     }
 
-    /* 3. MOBILE CONTROLS (Bottom Fixed) */
+    /* 3. MOBILE CONTROLS (Split Layout) */
     .mobile-controls {
         display: grid !important;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 5px;
+        grid-template-columns: 1fr 1fr;
+        /* Split Left/Right */
+        grid-template-areas:
+            "hold rotate"
+            "left right"
+            "down drop";
+        gap: 12px;
+        column-gap: 50px;
+        /* Space between hands */
 
-        /* Fixed Bottom */
         position: fixed;
-        bottom: 10px;
+        bottom: 20px;
         left: 50%;
         transform: translateX(-50%);
         width: 95%;
-        max-width: 400px;
+        max-width: 450px;
         z-index: 9999;
 
         padding: 5px;
-        background: rgba(0, 0, 0, 0.7);
-        backdrop-filter: blur(5px);
-        border-radius: 15px;
-        border: 1px solid rgba(255, 255, 255, 0.15);
+        background: transparent;
+        border: none;
+        pointer-events: none;
+        /* Let touches pass through empty space */
     }
 
-    /* Buttons */
     .mobile-controls button {
+        pointer-events: auto;
+        /* Buttons are clickable */
         display: flex;
         justify-content: center;
         align-items: center;
 
-        background: rgba(255, 255, 255, 0.1);
+        background: rgba(0, 0, 0, 0.6);
         border: 1px solid rgba(255, 255, 255, 0.2);
         color: white;
 
         padding: 0;
         height: 7vh;
-        min-height: 50px;
-        max-height: 80px;
+        min-height: 55px;
+        max-height: 75px;
 
-        border-radius: 10px;
+        border-radius: 12px;
         font-size: 1.5rem;
         cursor: pointer;
         touch-action: manipulation;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
     }
 
     .mobile-controls button:active {
@@ -508,19 +497,51 @@ canvas#tetris {
         transform: scale(0.95);
     }
 
-    /* Button Colors */
+    /* Button Positioning & Styling */
+    /* LEFT SIDE */
     #btn-hold {
+        grid-area: hold;
         border-color: #FFD700;
         color: #FFD700;
+        width: 80%;
+        justify-self: start;
     }
 
+    #btn-left {
+        grid-area: left;
+        width: 90%;
+        justify-self: start;
+        background: rgba(255, 255, 255, 0.15);
+    }
+
+    #btn-down {
+        grid-area: down;
+        width: 80%;
+        justify-self: start;
+        background: rgba(255, 255, 255, 0.15);
+    }
+
+    /* RIGHT SIDE */
     #btn-rotate {
+        grid-area: rotate;
         border-color: #00FF00;
         color: #00FF00;
+        width: 80%;
+        justify-self: end;
+    }
+
+    #btn-right {
+        grid-area: right;
+        width: 90%;
+        justify-self: end;
+        background: rgba(255, 255, 255, 0.15);
     }
 
     #btn-drop {
+        grid-area: drop;
         border-color: #FF4500;
         color: #FF4500;
+        width: 80%;
+        justify-self: end;
     }
 }
