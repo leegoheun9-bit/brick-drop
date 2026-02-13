@@ -441,107 +441,98 @@ canvas#tetris {
         display: none;
     }
 
-    /* 3. MOBILE CONTROLS (Split Layout) */
+    /* 3. MOBILE CONTROLS (Standardized & Centered) */
     .mobile-controls {
         display: grid !important;
         grid-template-columns: 1fr 1fr;
-        /* Split Left/Right */
+        /* Left / Right columns */
         grid-template-areas:
             "hold rotate"
             "left right"
             "down drop";
-        gap: 12px;
-        column-gap: 50px;
-        /* Space between hands */
+        gap: 15px;
+        /* Vertical gap */
+        column-gap: 20px;
+        /* Gap between hands (closer to center now) */
+        justify-items: center;
+        /* Center buttons in their columns */
+        align-items: center;
 
         position: fixed;
         bottom: 20px;
         left: 50%;
         transform: translateX(-50%);
-        width: 95%;
-        max-width: 450px;
+        width: 100%;
+        max-width: 360px;
+        /* Don't stretch too wide */
         z-index: 9999;
 
-        padding: 5px;
-        background: transparent;
-        border: none;
+        padding: 10px;
         pointer-events: none;
-        /* Let touches pass through empty space */
     }
 
     .mobile-controls button {
         pointer-events: auto;
-        /* Buttons are clickable */
         display: flex;
         justify-content: center;
         align-items: center;
 
         background: rgba(0, 0, 0, 0.6);
-        border: 1px solid rgba(255, 255, 255, 0.2);
+        border: 2px solid rgba(255, 255, 255, 0.15);
+        /* Thicker border */
         color: white;
 
+        /* UNIFIED SIZE: Square buttons */
+        width: 65px;
+        height: 65px;
         padding: 0;
-        height: 7vh;
-        min-height: 55px;
-        max-height: 75px;
+        margin: 0;
 
-        border-radius: 12px;
-        font-size: 1.5rem;
+        border-radius: 18px;
+        /* Softer rounded corners */
+        font-size: 1.6rem;
         cursor: pointer;
         touch-action: manipulation;
         box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        transition: transform 0.1s, background 0.1s;
     }
 
     .mobile-controls button:active {
-        background: rgba(255, 255, 255, 0.3);
-        transform: scale(0.95);
+        background: rgba(255, 255, 255, 0.2);
+        transform: scale(0.92);
     }
 
-    /* Button Positioning & Styling */
-    /* LEFT SIDE */
+    /* Assign Areas & Colors ONLY (No custom sizes/positions) */
     #btn-hold {
         grid-area: hold;
         border-color: #FFD700;
         color: #FFD700;
-        width: 80%;
-        justify-self: start;
     }
 
     #btn-left {
         grid-area: left;
-        width: 90%;
-        justify-self: start;
-        background: rgba(255, 255, 255, 0.15);
+        background: rgba(255, 255, 255, 0.1);
     }
 
     #btn-down {
         grid-area: down;
-        width: 80%;
-        justify-self: start;
-        background: rgba(255, 255, 255, 0.15);
+        background: rgba(255, 255, 255, 0.1);
     }
 
-    /* RIGHT SIDE */
     #btn-rotate {
         grid-area: rotate;
         border-color: #00FF00;
         color: #00FF00;
-        width: 80%;
-        justify-self: end;
     }
 
     #btn-right {
         grid-area: right;
-        width: 90%;
-        justify-self: end;
-        background: rgba(255, 255, 255, 0.15);
+        background: rgba(255, 255, 255, 0.1);
     }
 
     #btn-drop {
         grid-area: drop;
         border-color: #FF4500;
         color: #FF4500;
-        width: 80%;
-        justify-self: end;
     }
 }
