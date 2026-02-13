@@ -450,8 +450,8 @@ canvas#tetris {
             "hold rotate"
             "left right"
             "down drop";
-        gap: 15px;
-        /* Vertical gap */
+        gap: 8px;
+        /* Reduced Vertical gap for compacted height */
         column-gap: 20px;
         /* Gap between hands (closer to center now) */
         justify-items: center;
@@ -459,7 +459,8 @@ canvas#tetris {
         align-items: center;
 
         position: fixed;
-        bottom: 20px;
+        bottom: 5px;
+        /* Moved further DOWN to clear game board */
         left: 50%;
         transform: translateX(-50%);
         width: 100%;
@@ -467,7 +468,8 @@ canvas#tetris {
         /* Don't stretch too wide */
         z-index: 9999;
 
-        padding: 10px;
+        padding: 5px;
+        /* Minimal padding */
         pointer-events: none;
     }
 
