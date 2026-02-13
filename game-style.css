@@ -482,15 +482,17 @@ canvas#tetris {
         /* Thicker border */
         color: white;
 
-        /* UNIFIED SIZE: Square buttons */
-        width: 65px;
-        height: 65px;
+        /* REVERTED TO WIDE RECTANGLES */
+        width: 100px;
+        /* Wider */
+        height: 60px;
+        /* Shorter */
         padding: 0;
         margin: 0;
 
-        border-radius: 18px;
-        /* Softer rounded corners */
-        font-size: 1.6rem;
+        border-radius: 12px;
+        /* Standard rounded corners */
+        font-size: 1.5rem;
         cursor: pointer;
         touch-action: manipulation;
         box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
